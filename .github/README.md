@@ -68,9 +68,9 @@ Optionally a directory may be specified after the ruleset name otherwise it will
 
 # JSON Rules
 
-The following JSON placed in a file called `toggle.json` placed either beside the Phar or inside the directory you wish to work on will cause files named `omg1.txt` to `omg9.txt` to be renamed with a prefix of `bbq` and running it again will send them back.
+The following JSON placed in a file called `toggle.json` will cause files named `omg1.txt` to `omg9.txt` to be renamed with a prefix of `bbq` and running it again will send them back.
 
-This `CleanupRule` is a Regular Expression formatting rule where if the file name matches the `Find` expression it will be renamed to fit the `Format` pattern. Groups from the regex can be used with the tokens `{%1%}` where the number is the group number.
+These `CleanupRule` are Regular Expression formatting rules where if the file name matches the `Find` expression it will be renamed to fit the `Format` pattern. Groups from the regex can be used with the tokens `{%1%}` where the number is the group number.
 
 ```json
 {
