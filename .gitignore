@@ -1,0 +1,5 @@
+/.phpunit.cache
+/build
+/temp
+/vendor
+/fileutil.json

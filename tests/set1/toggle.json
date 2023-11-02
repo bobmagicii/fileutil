@@ -1,0 +1,14 @@
+{
+	"Cleanup": [
+		{
+			"Type": "regfmt",
+			"Find": "#^omg(\\d)\\.(txt)#",
+			"Format": "bbq{%1%}.{%2%}"
+		},
+		{
+			"Type": "regfmt",
+			"Find": "#^bbq(\\d)\\.(txt)#",
+			"Format": "omg{%1%}.{%2%}"
+		}
+	]
+}
