@@ -42,27 +42,35 @@ $ composer require bobmagicii/fileutil
 
 # Usage
 
-Rulesets are JSON files and they are searched for in the current directory and if one is not found then it is looked for in the global `conf` dir.
-
-The default is to do a dry run so you can see what it wants to do. When you are ready to go for real add the `--commit` option.
-
-Run the `video.json` cleanup on the current working directory.
-
+*Windows Nice Mode*
 ```shell
-$ fileutil cleanup video
+C:\Users\bob\Videos> fileutil cleanup strip-sitenames
 ```
 
-Run the `video.json` cleanup on a specific video folder. It is always best to quote your potentially crazy things.
-
+*Windows Lazy Mode*
 ```shell
-$ fileutil cleanup video "C:\Users\bob\Downloads\Video"
+C:\Users\bob\Videos> php C:\Local\Tools\fileutil.phar cleanup strip-sitenames
 ```
+
+In the above situation `fileutil` is a `bat` file sitting next to the `phar` file in the directory `C:\Local\Tools` which is in my shell `PATH`. That is what makes the magic invokation work. Otherwise you will likely have to do something like the second choice.
+
+* `C:\Local\Tools\fileutil.bat`
+* `C:\Local\Tools\fileutil.phar`
+
+It will search the directory that it is working on as well as a directory called `fileutil` sitting next to the Phar.
+
+* `C:\Users\bob\Videos\strip-sitenames.json`
+* `C:\Local\Tools\fileutil\strip-sitenames.json`
+
+Optionally a directory may be specified after the ruleset name otherwise it will work upon the current working directory. The default is to do a dry run to inspect what it wants to do. Add the `--commit` option to make it go brrrrrt.
 
 
 
 # JSON Rules
 
 The following JSON placed in a file called `toggle.json` placed either beside the Phar or inside the directory you wish to work on will cause files named `omg1.txt` to `omg9.txt` to be renamed with a prefix of `bbq` and running it again will send them back.
+
+This `CleanupRule` is a Regular Expression formatting rule where if the file name matches the `Find` expression it will be renamed to fit the `Format` pattern. Groups from the regex can be used with the tokens `{%1%}` where the number is the group number.
 
 ```json
 {
@@ -82,10 +90,6 @@ The following JSON placed in a file called `toggle.json` placed either beside th
 ```
 
 If you have the source code repo then this is one of the tests that can be ran. Watch the files in the `tests\set1` folder while running this a few times to see them flip flop:
-
-```shell
-$ php bin\fileutil.php cleanup toggle tests\set1 --commit
-```
 
 ```shell
 $ fileutil cleanup toggle tests\set1 --commit

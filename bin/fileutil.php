@@ -30,7 +30,9 @@ extends Console\Client {
 		$OptForce = $this->GetOption('commit');
 
 		$ConfigFilePath = $this->GetConfigFilePathInputBased($InputFile, $InputDir);
-		$Fresh = new Local\ConfigFile;
+		$Fresh = new Local\ConfigFile([
+			'Cleanup' => [ new Local\CleanupRule([ 'Type'=> 'regfmt', 'Find'=> '/regex-to-match/', 'Format'=> 'format-to-rename' ]) ]
+		]);
 
 		////////
 
@@ -45,6 +47,9 @@ extends Console\Client {
 			$this->PrintLn($this->Format('Use --commit to force overwrite.', static::FmtAccent), 2 );
 			return 0;
 		}
+
+		if(!file_exists(dirname($ConfigFilePath)))
+		Common\Filesystem\Util::MkDir(dirname($ConfigFilePath));
 
 		if(!is_writable(dirname($ConfigFilePath)))
 		$this->Quit(1, $ConfigFilePath);
@@ -163,7 +168,7 @@ extends Console\Client {
 
 			if(!file_exists($File))
 			$File = Common\Filesystem\Util::Pathify(
-				dirname($this->File, 2), basename($File)
+				dirname($this->File, 2), 'fileutil', basename($File)
 			);
 		}
 
@@ -185,7 +190,9 @@ extends Console\Client {
 		// file next to this file.
 
 		if(!$TargetDir)
-		$TargetDir = dirname($this->File, 2);
+		$TargetDir = Common\Filesystem\Util::Pathify(
+			dirname($this->File, 2), 'fileutil'
+		);
 
 		return Common\Filesystem\Util::Pathify($TargetDir, $File);
 	}
