@@ -66,7 +66,7 @@ The following JSON placed in a file called `toggle.json` placed either beside th
 
 ```json
 {
-	"Rules": [
+	"Cleanup": [
 		{
 			"Type": "regfmt",
 			"Find": "#^omg(\\d)\\.(txt)#",
